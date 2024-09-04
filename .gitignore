@@ -1,3 +1,5 @@
 core_profile/
-local/
+volumes/
 env_local.sh
+.history
+.vscode
