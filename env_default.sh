@@ -1,9 +1,9 @@
 #!/bin/bash
 # Default settings for security
-export WAS_ADMIN=wpsadmin
-export WAS_PASSWORD=wpsadminz
-export DX_ADMIN=wpsadmin
-export DX_PASSWORD=wpsadmina
+# export WAS_ADMIN=wpsadmin
+# export WAS_PASSWORD=wpsadminz
+# export DX_ADMIN=wpsadmin
+# export DX_PASSWORD=wpsadmina
 
 # DX project and namespaces definitions
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -24,7 +24,7 @@ export DX_HOSTNAME=localhost              # external hostname of dx environment.
 #
 export REGISTRY="hclds-registry.factor-y.com"
 
-echo "DX Registry:      $REGISTRY"
-echo "DX DX_HOSTNAME:   $DX_HOSTNAME"
-echo "DX COMPOSE_FILE:  $COMPOSE_FILE"
-echo "DX COMPOSE_PROJECT_NAME: $COMPOSE_PROJECT_NAME"
+echo "DX Registry:              $REGISTRY"
+echo "DX DX_HOSTNAME:           $DX_HOSTNAME"
+echo "DX COMPOSE_FILE:          $COMPOSE_FILE"
+echo "DX COMPOSE_PROJECT_NAME:  $COMPOSE_PROJECT_NAME"

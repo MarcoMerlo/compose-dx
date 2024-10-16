@@ -25,7 +25,7 @@ services:
       - DX_ADMIN=${DX_ADMIN:-wpsadmin}
       - DX_PASSWORD=${DX_PASSWROD:-wpsadmin}
     volumes:
-      - ./volumes/core/wp_profile:/opt/HCL/wp_profile
+      - ./volumes/${DX_VERSION}/core/wp_profile:/opt/HCL/wp_profile
     ports:
       - "7777:7777"
       - "10020:10020"
@@ -77,7 +77,7 @@ services:
   #   ports:
   #     - "3000:3001"
   #   volumes:
-  #     - ./volumes/dam/upload:/opt/app/upload
+  #     - ./volumes/${DX_VERSION}/dam/upload:/opt/app/upload
   #   networks:
   #     - default
   # image-processor:
@@ -129,7 +129,7 @@ services:
   #   ports:
   #     - "5433:5432"
   #   volumes:
-  #     - ./volumes/dam/db:/var/lib/pgsql/11/data
+  #     - ./volumes/${DX_VERSION}/dam/db:/var/lib/pgsql/11/data
   #   networks:
   #     - default
   # dam-db-pool:
@@ -181,9 +181,9 @@ services:
   #     - PERFORM_FILE_PERMISSION_CHECK=true
   #     - PERFORM_SOFTLINK_HARDLINK_CHECK=true
   #   volumes:
-  #     - ./volumes/core/wp_profile:/mnt/prereqs-checks-volumes/wp_profile
-  #     - ./volumes/dam/upload:/mnt/prereqs-checks-volumes/upload
-  #     - ./volumes/dam/db:/mnt/prereqs-checks-volumes/data
+  #     - ./volumes/${DX_VERSION}/core/wp_profile:/mnt/prereqs-checks-volumes/wp_profile
+  #     - ./volumes/${DX_VERSION}/dam/upload:/mnt/prereqs-checks-volumes/upload
+  #     - ./volumes/${DX_VERSION}/dam/db:/mnt/prereqs-checks-volumes/data
   #   ports:
   #     - 81:8082
   #   networks:
