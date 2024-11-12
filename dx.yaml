@@ -15,17 +15,20 @@
 # version: "3.8" - Docker compose v2 utilizza sempre l'ultima versione e non
 # è necessario specificare
 
+
 services:
   core:
+    platform: "linux/amd64"
     container_name: dx-core
     image: ${DX_DOCKER_IMAGE_CORE:?'Missing docker image environment parameter'}
     environment:
+      - TZ=Europe/Rome
       - WAS_ADMIN=${WAS_ADMIN:-wpsadmin}
       - WAS_PASSWORD=${WAS_PASSWORD:-wpsadmin}
       - DX_ADMIN=${DX_ADMIN:-wpsadmin}
       - DX_PASSWORD=${DX_PASSWROD:-wpsadmin}
     volumes:
-      - ./volumes/${DX_VERSION}/core/wp_profile:/opt/HCL/wp_profile
+      - ${DX_PROFILE_ROOT}:/opt/HCL/wp_profile
     ports:
       - "7777:7777"
       - "10020:10020"
@@ -38,20 +41,23 @@ services:
       - "10203:10203"
     networks:
       - default
-  # ringapi:
-  #   container_name: dx-ringapi
-  #   depends_on:
-  #     - core
-  #   image: ${DX_DOCKER_IMAGE_RINGAPI:?'Missing docker image environment parameter'}
-  #   environment:
-  #     - DEBUG=ringapi-server:*
-  #     - PORTAL_PORT=10039
-  #     - PORTAL_HOST=dx-core
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #     - default
+  ringapi:
+    platform: "linux/amd64"
+    container_name: dx-ringapi
+    depends_on:
+      - core
+    image: ${DX_DOCKER_IMAGE_RINGAPI:?'Missing docker image environment parameter'}
+    environment:
+      - TZ=Europe/Rome
+      - DEBUG=ringapi-server:*
+      - PORTAL_PORT=10039
+      - PORTAL_HOST=dx-core
+    ports:
+      - "3000:3000"
+    networks:
+      - default
   # dam:
+  #   platform: "linux/amd64"
   #   container_name: dx-dam
   #   depends_on:
   #     dam-db-pool:
@@ -77,10 +83,11 @@ services:
   #   ports:
   #     - "3000:3001"
   #   volumes:
-  #     - ./volumes/${DX_VERSION}/dam/upload:/opt/app/upload
+  #     - ${DX_DAM_ROOT}/upload:/opt/app/upload
   #   networks:
   #     - default
   # image-processor:
+  #   platform: "linux/amd64"
   #   container_name: dx-image-processor
   #   image: ${DX_DOCKER_IMAGE_IMAGE_PROCESSOR:?'Missing docker image environment parameter'}
   #   environment:
@@ -90,6 +97,7 @@ services:
   #   networks:
   #     - default
   # cc:
+  #   platform: "linux/amd64"
   #   container_name: dx-cc
   #   image: ${DX_DOCKER_IMAGE_CC:?'Missing docker image environment parameter'}
   #   ports:
@@ -103,6 +111,7 @@ services:
   #   networks:
   #     - default
   # dam-db-node-0:
+  #   platform: "linux/amd64"
   #   container_name: dx-dam-db-node-0
   #   hostname: dx-dam-db-node-0
   #   image: ${DX_DOCKER_IMAGE_DAM_DB_NODE:?'Missing docker image environment parameter'}
@@ -129,10 +138,11 @@ services:
   #   ports:
   #     - "5433:5432"
   #   volumes:
-  #     - ./volumes/${DX_VERSION}/dam/db:/var/lib/pgsql/11/data
+  #     - ${DX_DAM_ROOT}/db:/var/lib/pgsql/11/data
   #   networks:
   #     - default
   # dam-db-pool:
+  #   platform: "linux/amd64"
   #   container_name: dx-dam-db-pool
   #   image: ${DX_DOCKER_IMAGE_DAM_DB_CONNECTION_POOL:?'Missing docker image environment parameter'}
   #   ports:
@@ -161,16 +171,22 @@ services:
   #     timeout: 15s
   #     retries: 5
   haproxy:
+    platform: "linux/amd64"
+    environment:
+      - TZ=Europe/Rome
     image: ${DX_DOCKER_IMAGE_HAPROXY:?'Missing docker image environment parameter'}
     container_name: dx-haproxy
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - ./certs:/certs
     ports:
       - 80:8081
       - 443:8081
+      - 8404:8404
     networks:
       - default
   # prereqs-checker:
+  #   platform: "linux/amd64"
   #   image: ${DX_DOCKER_IMAGE_PREREQS_CHECKER:?'Missing docker image environment parameter'}
   #   container_name: dx-prereqs-checker
   #   environment:
@@ -181,9 +197,9 @@ services:
   #     - PERFORM_FILE_PERMISSION_CHECK=true
   #     - PERFORM_SOFTLINK_HARDLINK_CHECK=true
   #   volumes:
-  #     - ./volumes/${DX_VERSION}/core/wp_profile:/mnt/prereqs-checks-volumes/wp_profile
-  #     - ./volumes/${DX_VERSION}/dam/upload:/mnt/prereqs-checks-volumes/upload
-  #     - ./volumes/${DX_VERSION}/dam/db:/mnt/prereqs-checks-volumes/data
+  #     - ${DX_PROFILE_ROOT}:/mnt/prereqs-checks-volumes/wp_profile
+  #     - ${DX_DAM_ROOT}/upload:/mnt/prereqs-checks-volumes/upload
+  #     - ${DX_DAM_ROOT}/db:/mnt/prereqs-checks-volumes/data
   #   ports:
   #     - 81:8082
   #   networks:

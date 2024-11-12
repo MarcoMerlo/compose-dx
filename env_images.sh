@@ -1,12 +1,10 @@
 #!/bin/bash
 
-#
+# *********************************************************
 # Defaults for version and registry
 #
 export DX_VERSION="${DX_VERSION:-CF223}"
-REGISTRY="${REGISTRY:-hclcr.io}"
-
-echo "Setup images for $DX_VERSION from registry $REGISTRY"
+export REGISTRY="${REGISTRY:-hclcr.io}"
 
 #
 # DX V9.5 CF223
@@ -41,7 +39,8 @@ if [ "$DX_VERSION" = "CF223" ]; then
     export DX_DOCKER_IMAGE_RINGAPI=${REGISTRY:-}/dx/ringapi:v1.36.0_20240925-1909
 
     # docker pull hclcr.io/dx-public/dxclient:IMAGE_TAG
-    export DX_DOCKER_IMAGE_DXCLIENT=${REGISTRY:-}/dx/dxclient:v95_CF223_20240925-1921
+    # https://hclcr.io/harbor/projects/95/repositories/dxclient/artifacts-tab
+    export DX_DOCKER_IMAGE_DXCLIENT=${REGISTRY:-}/dx/dxclient:v95_CF223_20240925-1911
 fi
 
 #
@@ -124,7 +123,7 @@ if [ "$DX_VERSION" = "CF191" ]; then
     export DX_DOCKER_IMAGE_RINGAPI=hcl/dx/ringapi:v1.5.0_20201211-2200
 fi
 
-echo "DX_VERSION:               $DX_VERSION" 
+echo "DX_VERSION:               $DX_VERSION"
 echo "DX_DOCKER_IMAGE_CORE:     $DX_DOCKER_IMAGE_CORE"
 echo "DX_DOCKER_IMAGE_HAPROXY:  $DX_DOCKER_IMAGE_HAPROXY"
 echo "DX_DOCKER_IMAGE_RINGAPI:  $DX_DOCKER_IMAGE_RINGAPI"

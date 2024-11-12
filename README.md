@@ -12,23 +12,35 @@ When creating volumes please ensure you set write rights accordingly.
 For instance:
 
 > mkdir -p core_profile
-> 
 > chown -R 1000:1001 core_profile
-> 
 > chmod ug+rwx core_profile
 
 A utility shortahand is (where gnu make is available)
 
 > make prepare
 
-## Operating the took
+## Quick setup
+
+Where make is available:
+
+    make tooling
+
+Manual tooling installation where make is not available:
+
+    brew install just
+	brew install direnv
+
+
+## Operating the tool
 
 Before running docker compose you need to setup the environment. The following command does it for you:
 
 > . ./setEnv.sh
 
 It sources env_default.sh, env_local.sh (user created) and env_images.hs in the shell context so that environment variables are set befor launcing docker.
-Not running the environment setup correctly will make startup fail.
+Not running the environment setup correctly will make startup and other docker-compose commands to fail.
+
+You can use `direnv` to automatically source all the configuration when entering the runtime folder.
 
 Check out the `makefile` file to see the commands you can use for different tasks or just run "make <target>"
 
@@ -43,7 +55,10 @@ When services are started you can access DX and Ring API as:
 * http://localhost:3000/dx/api/core/v1/explorer/
 * http://localhost:3000/dx/api/core/v1/graphql
 
-### WebSphere Administrative Console
-* http://localhost:10041/ibm/console
+### WebSphere HCL Dx Administrative Console
+* https://localhost:10041/ibm/console
+
+### WebSphere Config Wizard Administrative Console
+* https://localhost:10203/ibm/console
 
 Note: If this is not working, try replacing localhost with the IP of your machine's network interface

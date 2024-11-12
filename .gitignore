@@ -1,5 +1,12 @@
-core_profile/
+# created by tools / compose / workspaces
 volumes/
+certs/
+work/
+
+# private configs
 env_local.sh
+
+# IDE
 .history
 .vscode
+.idea
