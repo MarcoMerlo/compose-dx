@@ -16,7 +16,7 @@ create-self-signed-localhost-cert:
 	sudo security add-trusted-cert -p ssl -d -r trustRoot \
 	  -k ~/Library/Keychains/login.keychain localhost.crt
 
-# Install tolls to work with 
+# Install tolls to work with
 tooling:
 	brew install just
 	brew install direnv
@@ -67,15 +67,15 @@ run:
 prepare:
 	mkdir -p ${DX_PROFILE_ROOT}
 	chown -R 1000:10001 ${DX_PROFILE_ROOT}
-	chmod ug+rwx ${DX_PROFILE_ROOT}
+	chmod a+rwx ${DX_PROFILE_ROOT}
 	echo "Prepared: ${DX_PROFILE_ROOT}"
 	mkdir -p ${DX_DAM_ROOT}/upload
 	chown -R 1000:10001 ${DX_DAM_ROOT}/upload
-	chmod ug+rwx ${DX_DAM_ROOT}/upload
+	chmod a+rwx ${DX_DAM_ROOT}/upload
 	echo "Prepared: ${DX_DAM_ROOT}/upload"
 	mkdir -p ${DX_DAM_ROOT}/db 
 	chown -R 1000:10001 ${DX_DAM_ROOT}/db 
-	chmod ug+rwx ${DX_DAM_ROOT}/db 
+	chmod a+rwx ${DX_DAM_ROOT}/db 
 	echo "Prepared: ${DX_DAM_ROOT}/db"
 
 # Logs target show logs from all containers

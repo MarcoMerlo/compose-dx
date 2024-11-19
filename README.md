@@ -21,6 +21,10 @@ A utility shortahand is (where gnu make is available)
 
 ## Quick setup
 
+### Install tools
+
+The project needs the following tools to operate, use one of the following two methods:
+
 Where make is available:
 
     make tooling
@@ -28,8 +32,25 @@ Where make is available:
 Manual tooling installation where make is not available:
 
     brew install just
-	brew install direnv
+    brew install direnv
 
+Follow instructions to include direnv opptimization in your shell, then reload terminal sessions to make new tools available
+
+Just is only needed if you intend to use `dxclient` to apply configurations or deploy artifacts to local or remote dx servers.
+
+### Prepare the workspace
+
+After installing the tools:
+
+    direnv allow
+    docker login <image registry>
+    make prepare
+
+### Startup compose
+
+After preparing the workspace:
+
+    make up
 
 ## Operating the tool
 
