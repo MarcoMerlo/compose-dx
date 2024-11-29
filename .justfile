@@ -76,7 +76,7 @@ dx-deploy-app name file:
     @echo "{{STS}} - application {{name}} - {{file}}"
     dxclient.sh deploy-application \
       -applicationName {{name}} \
-      -applicationFile /dxclient/store/artifacts/{{file}} \
+      -applicationFile /dxclient/store/artifacts/{{file}}
 
 # Install theme on current StatefulSet
 [no-cd]
